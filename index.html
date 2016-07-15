@@ -12,16 +12,24 @@
 	<!-- Custom CSS -->
 	<link rel="stylesheet" href="stylesheet.css">
 	<!-- Google Maps Library -->
-	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDVuLY7EaPbuHtJtkqYnkFNRIYYqsgljeM&libraries=places"></script>
-
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDajzq3RbRKKon_rqglv9rr3BxGmynggvY&libraries=places&callback=initMap"
+    async defer></script>
 </head>
 <body>
-	<div class="container">
-    <br>
-    <form id="places-search">
-      <input type="text">
-      <input type="submit" value="search">
-    </form>
-		<img src="imgs/powered_by_google_on_white.png">
-	</div>
+  <input id="pac-input" class="controls" type="text"
+      placeholder="Enter a location">
+  <div id="type-selector" class="controls">
+    <input type="radio" name="type" id="changetype-all" checked="checked">
+    <label for="changetype-all">All</label>
+
+    <input type="radio" name="type" id="changetype-establishment">
+    <label for="changetype-establishment">Establishments</label>
+
+    <input type="radio" name="type" id="changetype-address">
+    <label for="changetype-address">Addresses</label>
+
+    <input type="radio" name="type" id="changetype-geocode">
+    <label for="changetype-geocode">Geocodes</label>
+  </div>
+  <div id="map"></div>
 </body>
