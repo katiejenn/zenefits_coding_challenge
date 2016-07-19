@@ -1,29 +1,42 @@
-function initMap() {
+(function initMap(window, google, mapster) {
 	var options = {
 	  center: {
 	  	lat: 37.784318, 
 	  	lng: -122.395144},
-	  zoom: 13
+	  zoom: 13,
+	  scrollwheel: true,
+	  draggable: true,
+	  maxZoom: 15,
+	  minZoom: 11
 	};
-	var map = new google.maps.Map(document.getElementById('map'), options);
+	var element = document.getElementById('map');
+	var map = Mapster.create(element, options);
+
+	/* Experimenting with my own event listener */
+	// map._on('click', function(e){
+	// 	console.log(e);
+	// 	console.log(this);
+	// });
+
+	// map._on('dragend', function(){
+	// 	alert("done dragging");
+	// });
+
 	var input = /** @type {!HTMLInputElement} */(
 	    document.getElementById('pac-input'));
-
+	//console.dir(map);
 	var types = document.getElementById('type-selector');
-	map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
-	map.controls[google.maps.ControlPosition.TOP_LEFT].push(types);
+	map.gMap.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+	map.gMap.controls[google.maps.ControlPosition.TOP_LEFT].push(types);
 
 	var autocomplete = new google.maps.places.Autocomplete(input);
 	autocomplete.bindTo('bounds', map);
 
 	var infowindow = new google.maps.InfoWindow();
-	var marker = new google.maps.Marker({
-	  map: map,
-	  anchorPoint: new google.maps.Point(0, -29)
-	});
+	var marker = map.addMarker(0, -29);
 
 	autocomplete.addListener('place_changed', function() {
-	  infowindow.close();
+	  // infowindow.close();
 	  marker.setVisible(false);
 	  var place = autocomplete.getPlace();
 	  if (!place.geometry) {
@@ -61,8 +74,8 @@ function initMap() {
 	  infowindow.open(map, marker);
 	});
 
-	// Sets a listener on a radio button to change the filter type on Places
-	// Autocomplete.
+	//Sets a listener on a radio button to change the filter type on Places
+	//Autocomplete.
 	function setupClickListener(id, types) {
 	  var radioButton = document.getElementById(id);
 	  radioButton.addEventListener('click', function() {
@@ -74,4 +87,4 @@ function initMap() {
 	setupClickListener('changetype-address', ['address']);
 	setupClickListener('changetype-establishment', ['establishment']);
 	setupClickListener('changetype-geocode', ['geocode']);
-}
+}(window, google, window.Mapster));

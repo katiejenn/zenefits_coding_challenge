@@ -1,1 +1,0 @@
-/* Custom Map library via Google Maps */
