@@ -10,33 +10,23 @@
 	  minZoom: 11
 	};
 	var element = document.getElementById('map');
-	var map = Mapster.create(element, options);
-
-	/* Experimenting with my own event listener */
-	// map._on('click', function(e){
-	// 	console.log(e);
-	// 	console.log(this);
-	// });
-
-	// map._on('dragend', function(){
-	// 	alert("done dragging");
-	// });
+	var map = new google.maps.Map(element, options);
 
 	var input = /** @type {!HTMLInputElement} */(
 	    document.getElementById('pac-input'));
-	//console.dir(map);
 	var types = document.getElementById('type-selector');
-	map.gMap.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
-	map.gMap.controls[google.maps.ControlPosition.TOP_LEFT].push(types);
+	map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+	map.controls[google.maps.ControlPosition.TOP_LEFT].push(types);
 
 	var autocomplete = new google.maps.places.Autocomplete(input);
 	autocomplete.bindTo('bounds', map);
 
-	var infowindow = new google.maps.InfoWindow();
-	var marker = map.addMarker(0, -29);
+  var marker = new google.maps.Marker({
+    map: map,
+    anchorPoint: new google.maps.Point(0, -29)
+  });
 
 	autocomplete.addListener('place_changed', function() {
-	  // infowindow.close();
 	  marker.setVisible(false);
 	  var place = autocomplete.getPlace();
 	  if (!place.geometry) {
