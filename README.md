@@ -6,7 +6,7 @@ A Web Application that allows users to perform a search query on a location in S
 
 To use:
 
-1. Fork and clone from repo
+1. Extract all files into the same directory
 
 2. load index.html into browser of choice
 
